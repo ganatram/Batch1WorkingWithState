@@ -2,6 +2,7 @@ type Props = {
   permissions: undefined | string[];
 };
 export function Content({ permissions }: Props) {
+  // ['admin']
   if (permissions === undefined) {
     return null;
   }

@@ -36,14 +36,14 @@ function myReducer(state: State, action: Action): State {
     case 'authenticate':
       return { ...state, loading: true };
     case 'authenticated':
-      return { ...state, loading: false, user: action.user };
+      return { ...state, loading: false, user: action.user }; // loading:false,user:{ id: '1', name: 'Bob' }
     case 'authorize':
-      return { ...state, loading: true };
+      return { ...state, loading: true }; // loading:true
     case 'authorized':
       return {
         ...state,
-        loading: false,
-        permissions: action.permissions,
+        loading: false, // loading:false
+        permissions: action.permissions, // ['admin']
       };
     default:
       return state;
@@ -54,18 +54,19 @@ export function App() {
   const [{ user, permissions, loading }, dispatch] = useReducer(myReducer, initialState);
 
   async function handleSignInClick() {
-    dispatch({ type: 'authenticate' }); // dispatch -> action
-    const authenticatedUser = await authenticate(); // loading: true
+    dispatch({ type: 'authenticate' });
+    const authenticatedUser = await authenticate(); // { id: '1', name: 'Bob' }
+    console.log(authenticatedUser); // { id: '1', name: 'Bob' }
     dispatch({
       type: 'authenticated',
-      user: authenticatedUser,
+      user: authenticatedUser, // { id: '1', name: 'Bob' }
     });
     if (authenticatedUser !== undefined) {
-      dispatch({ type: 'authorize' });
-      const authorizedPermissions = await authorize(authenticatedUser.id);
+      dispatch({ type: 'authorize' }); // loading:true
+      const authorizedPermissions = await authorize(authenticatedUser.id); // ['admin']
       dispatch({
         type: 'authorized',
-        permissions: authorizedPermissions,
+        permissions: authorizedPermissions, // ['admin']
       });
     }
   }
