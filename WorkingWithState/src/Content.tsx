@@ -1,15 +1,21 @@
+import { useContext } from 'react';
+import { AppContext } from './AppContext';
+
 type Props = {
   permissions: undefined | string[];
 };
-export function Content({ permissions }: Props) {
-  // ['admin']
-  if (permissions === undefined) {
+export function Content() {
+  const { location } = useContext(AppContext); // { user, permissions, loading,location dispatch }
+
+  return <div> {location} </div>;
+
+  /*   if (permissions === undefined) {
     return null;
   }
-
-  return permissions.includes('admin') ? (
+ */
+  /*   return permissions.includes('admin') ? (
     <p className="mt-4 text-l text-center">Some important stuff that only an admin can do</p>
   ) : (
     <p className="mt-4 text-l text-center">Insufficient permissions</p>
-  );
+  ); */
 }

@@ -5,12 +5,14 @@ type State = {
   user: undefined | User;
   permissions: undefined | string[];
   loading: boolean;
+  location: string;
 };
 
 const initialState: State = {
   user: undefined,
   permissions: undefined,
   loading: false,
+  location: 'Mangalore',
 };
 
 type Action =
@@ -52,7 +54,7 @@ type AppContextType = State & {
 };
 
 // step 1 - create our context - createContext:
-const AppContext = createContext<AppContextType>({
+export const AppContext = createContext<AppContextType>({
   ...initialState,
   dispatch: () => {},
 });
@@ -64,10 +66,10 @@ type Props = {
 //Step 2 - create a component , which returns our context as a provider in template
 
 export function AppProvider({ children }: Props) {
-  const [{ user, permissions, loading }, dispatch] = useReducer(myReducer, initialState);
+  const [{ user, permissions, loading, location }, dispatch] = useReducer(myReducer, initialState);
 
   return (
-    <AppContext.Provider value={{ user, permissions, loading, dispatch }}>
+    <AppContext.Provider value={{ user, permissions, loading, location, dispatch }}>
       {children}
     </AppContext.Provider>
   );
