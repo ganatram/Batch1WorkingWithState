@@ -39,17 +39,19 @@ export function App() {
 }
  */
 
-import { AppProvider } from './AppContext';
+import { Provider } from 'react-redux';
+// import { AppProvider } from './AppContext';
 import { Header } from './Header';
 import { Main } from './Main';
+import {myStore}
 
 export function App() {
   return (
     <div>
-      <AppProvider>
+      <Provider store={myStore}>
         <Header />
         <Main />
-      </AppProvider>
+      </Provider>
     </div>
   );
 }

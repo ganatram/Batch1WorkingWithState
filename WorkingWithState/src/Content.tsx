@@ -1,11 +1,8 @@
-import { useContext } from 'react';
-import { AppContext } from './AppContext';
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
 
-type Props = {
-  permissions: undefined | string[];
-};
 export function Content() {
-  const { permissions } = useContext(AppContext); // { user, permissions, loading,location dispatch }
+  const permissions = useSelector((state: RootState) => state.user.permissions);
 
   if (permissions === undefined) {
     return null;

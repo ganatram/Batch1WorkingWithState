@@ -1,15 +1,10 @@
-import { useContext } from 'react';
-import { User } from './api/authenticate';
 import { Content } from './Content';
-import { AppContext } from './AppContext';
-
-type Props = {
-  user: undefined | User;
-  permissions: undefined | string[];
-};
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
 
 export function Main() {
-  const { user, permissions } = useContext(AppContext); // { user, permissions, loading, dispatch }
+  const user = useSelector((state: RootState) => state.user.user);
+
   return (
     <main className="py-8">
       <h1 className="text-3xl text-center font-bold underline">Welcome</h1>

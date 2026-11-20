@@ -1,32 +1,27 @@
-import { useContext } from 'react';
-import { authenticate, User } from './api/authenticate';
-import { AppContext } from './AppContext';
+import { authenticate } from './api/authenticate';
 import { authorize } from './api/authorize';
-
-/* type Props = {
-  user: undefined | User;
-  onSignInClick: () => void;
-  loading: boolean;
-}; */
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from './store/store';
+import {
+  authenticateAction,
+  authenticatedAction,
+  authorizeAction,
+  authorizedAction,
+} from './store/userSlice';
 
 export function Header() {
-  const { user, loading, dispatch } = useContext(AppContext); // { user, permissions, loading, dispatch }
+  const user = useSelector((state: RootState) => state.user.user);
+  const loading = useSelector((state: RootState) => state.user.loading);
+  const dispatch = useDispatch();
 
   async function handleSignInClick() {
-    dispatch({ type: 'authenticate' });
-    const authenticatedUser = await authenticate(); // { id: '1', name: 'Bob' }
-    console.log(authenticatedUser); // { id: '1', name: 'Bob' }
-    dispatch({
-      type: 'authenticated',
-      user: authenticatedUser, // { id: '1', name: 'Bob' }
-    });
+    dispatch(authenticateAction());
+    const authenticatedUser = await authenticate();
+    dispatch(authenticatedAction(authenticatedUser));
     if (authenticatedUser !== undefined) {
-      dispatch({ type: 'authorize' }); // loading:true
-      const authorizedPermissions = await authorize(authenticatedUser.id); // ['admin']
-      dispatch({
-        type: 'authorized',
-        permissions: authorizedPermissions, // ['admin']
-      });
+      dispatch(authorizeAction());
+      const authorizedPermissions = await authorize(authenticatedUser.id);
+      dispatch(authorizedAction(authorizedPermissions));
     }
   }
   return (
