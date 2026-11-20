@@ -12,7 +12,8 @@ Step 2) Child component - act as Provider component
 
                   function myReducer(state,action){
                     switch(action.type){
-                        type
+                        type:'authenticate',
+                        return {...state,permissions:true}
                     }
 
 
