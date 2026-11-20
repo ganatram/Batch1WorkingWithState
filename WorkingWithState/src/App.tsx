@@ -1,57 +1,17 @@
-/* import { useReducer } from 'react';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 import { Header } from './Header';
 import { Main } from './Main';
-import { authenticate, User } from './api/authenticate';
-import { authorize } from './api/authorize';
 
-
-
-
-
-
-export function App() {
-  const [{ user, permissions, loading }, dispatch] = useReducer(myReducer, initialState);
-
-  async function handleSignInClick() {
-    dispatch({ type: 'authenticate' });
-    const authenticatedUser = await authenticate(); // { id: '1', name: 'Bob' }
-    console.log(authenticatedUser); // { id: '1', name: 'Bob' }
-    dispatch({
-      type: 'authenticated',
-      user: authenticatedUser, // { id: '1', name: 'Bob' }
-    });
-    if (authenticatedUser !== undefined) {
-      dispatch({ type: 'authorize' }); // loading:true
-      const authorizedPermissions = await authorize(authenticatedUser.id); // ['admin']
-      dispatch({
-        type: 'authorized',
-        permissions: authorizedPermissions, // ['admin']
-      });
-    }
-  }
-
+function App() {
   return (
     <div className="max-w-7xl mx-auto px-4">
-      <Header user={user} onSignInClick={handleSignInClick} loading={loading} />
-      <Main user={user} permissions={permissions} />
-    </div>
-  );
-}
- */
-
-import { Provider } from 'react-redux';
-// import { AppProvider } from './AppContext';
-import { Header } from './Header';
-import { Main } from './Main';
-import {myStore}
-
-export function App() {
-  return (
-    <div>
-      <Provider store={myStore}>
+      <Provider store={store}>
         <Header />
         <Main />
       </Provider>
     </div>
   );
 }
+
+export default App;
